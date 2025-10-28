@@ -28,4 +28,4 @@ export CARGO_TERM_COLOR=always
 
 export JEMALLOC_SYS_DISABLE_WARN_ERROR=1
 
-cargo +stable zigbuild -r --target "$1" -p "$2" --all-features
+cargo +stable zigbuild -r --target "$1" -p "$2"
