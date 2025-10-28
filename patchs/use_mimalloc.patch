@@ -1,0 +1,28 @@
+diff --git a/crates/cli/src/main.rs b/crates/cli/src/main.rs
+index a00544c..68d98a8 100644
+--- a/crates/cli/src/main.rs
++++ b/crates/cli/src/main.rs
+@@ -8,7 +8,8 @@ use crate::args::Args;
+ use anyhow::Result;
+ use clap::Parser;
+ use tracing::error;
+-
++#[global_allocator]
++static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
+ fn main() {
+     logging::init();
+     if let Err(err) = try_run() {
+diff --git a/crates/server/src/main.rs b/crates/server/src/main.rs
+index 7ecddb4..e0ba633 100644
+--- a/crates/server/src/main.rs
++++ b/crates/server/src/main.rs
+@@ -19,7 +19,8 @@ use clap::Parser;
+ use tracing::error;
+ 
+ use crate::args::Args;
+-
++#[global_allocator]
++static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
+ #[rocket::main]
+ async fn main() -> Result<()> {
+     logging::init();
