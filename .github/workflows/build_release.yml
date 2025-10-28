@@ -161,7 +161,6 @@ jobs:
               file="$(find target -name "$bin_name")"
               echo "$(realpath $file)"              
               dd if=target/"${{ matrix.target }}"/release/$bin_name of=../output/$bin_name
-              cd  ..
               rm -rf "$i"
           done
 
@@ -169,5 +168,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ github.event.inputs.TARGET }}_deepseek_ocr_rs_${{ github.event.inputs.TOOLCHAINS }}
-          path: deepseek-ocr.rs/output/*
+          path: output/*
           retention-days: 2
