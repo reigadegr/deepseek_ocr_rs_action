@@ -145,7 +145,6 @@ runs:
 
     - name: Install CUDA
       uses: Jimver/cuda-toolkit@v0.2.11
-      use-github-cache: false
       id: cuda-toolkit
       with:
         cuda: "11.8.0"
