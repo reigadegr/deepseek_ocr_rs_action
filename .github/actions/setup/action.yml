@@ -143,6 +143,11 @@ runs:
       with:
         version: '2.16.01'
 
+    - name: Install CUDA
+      uses: Jimver/cuda-toolkit@v0.2.28
+      with:
+        cuda: '12.5.0'
+
     - name: reinstall self code
       shell: bash
       run: |
