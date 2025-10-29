@@ -64,6 +64,22 @@ runs:
          echo "Y" | sudo -E tee /sys/kernel/mm/lru_gen/enabled
          echo "1000" | sudo -E tee /sys/kernel/mm/lru_gen/min_ttl_ms
          echo "1" | sudo -E tee /sys/kernel/mm/swap/vma_ra_enabled
+         
+    - name: Set up GCC 11(cuda required)
+      if: runner.os == 'Linux'
+      shell: bash
+      run: |
+         sudo apt-get purge needrestart
+         sudo apt-get update
+         sudo apt-get install -y software-properties-common
+         sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+         sudo apt-get update
+         sudo apt-get install -y gcc-11 g++-11
+         sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 60
+         sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-11 60
+         sudo update-alternatives --set gcc /usr/bin/gcc-11
+         sudo update-alternatives --set g++ /usr/bin/g++-11
+
 
     - name: Install protoc
       uses: arduino/setup-protoc@v3
@@ -99,11 +115,29 @@ runs:
       with:
         version: '2.16.01'
 
+    - name: Clone setup_cuda repository (Windows)
+      shell: bash
+      if: ${{ runner.os != 'Linux' }}
+      run: git clone --depth 1 https://github.com/Silverlan/setup_cuda.git
+
+    - name: Install Cuda (Windows)
+      if: ${{ runner.os != 'Linux' }}
+      shell: pwsh
+      run: setup_cuda/setup_cuda.ps1
+      env:
+          INPUT_CUDA_VERSION: "12.5.0"
+
     - name: Install CUDA
+      if: runner.os == 'Linux'
       uses: Jimver/cuda-toolkit@v0.2.28
       id: cuda-toolkit
       with:
-        cuda: "12.6.0"
+        cuda: '12.8.1'
+        use-github-cache: false
+        use-local-cache: true
+        linux-local-args: '["--toolkit"]'
+        method: 'network'
+        sub-packages: '["nvcc"]'
 
     - name: reinstall self code
       shell: bash
