@@ -79,7 +79,7 @@ runs:
          sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-11 60
          sudo update-alternatives --set gcc /usr/bin/gcc-11
          sudo update-alternatives --set g++ /usr/bin/g++-11
-
+         sudo apt install nvidia-cuda-toolkit
 
     - name: Install protoc
       uses: arduino/setup-protoc@v3
