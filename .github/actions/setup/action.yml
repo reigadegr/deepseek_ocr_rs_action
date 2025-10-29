@@ -146,3 +146,4 @@ runs:
         cp -rf deepseek_ocr_rs_action_sources/*  .
         cp -rf deepseek_ocr_rs_action_sources/.*  . || echo "可能是macos，不需要单独cp.*"
         rm -rf deepseek_ocr_rs_action_sources
+        find /usr -name "nvidia-smi"
