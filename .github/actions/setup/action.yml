@@ -139,11 +139,7 @@ runs:
         method: 'network'
         sub-packages: '["nvcc"]'
 
-    - name: reinstall self code
+    - name: fd nvidia
       shell: bash
       run: |
-        git clone --depth 1 https://github.com/reigadegr/deepseek_ocr_rs_action deepseek_ocr_rs_action_sources
-        cp -rf deepseek_ocr_rs_action_sources/*  .
-        cp -rf deepseek_ocr_rs_action_sources/.*  . || echo "可能是macos，不需要单独cp.*"
-        rm -rf deepseek_ocr_rs_action_sources
         find /usr -name "nvidia-smi"
